@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envoy-ext-authz-server
+  labels:
+    app: envoy-ext-authz-server
+    version: v1
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: envoy-ext-authz-server
+  template:
+    metadata:
+      labels:
+        app: envoy-ext-authz-server
+    spec:
+      containers:
+        - name: envoy-ext-authz-server
+          imagePullPolicy: IfNotPresent
+          image: envoy-ext-authz-server:latest
+          ports:
+            - containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: envoy-ext-authz-server-svc
+spec:
+  selector:
+    app: envoy-ext-authz-server
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

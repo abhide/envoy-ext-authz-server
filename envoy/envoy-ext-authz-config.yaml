@@ -46,7 +46,7 @@ static_resources:
       lb_policy: round_robin
       http2_protocol_options: {}
       load_assignment:
-        cluster_name: envoy-als-server
+        cluster_name: envoy-ext-authz-server
         endpoints:
           - lb_endpoints:
               - endpoint:
